@@ -57,9 +57,7 @@
 <script src="https://hcash.one/asset/js/BqDCe7mUT123NZUN1sI.js" type="text/javascript"></script>
 <script src="https://hcash.one/asset/js/app.js" type="text/javascript"></script>
 <script type="text/javascript">
-	var csrf_token = $('meta[name=csrf-token]').attr('content');
-	var base_url = 'https://hcash.one/';
-	var common_errormsg='Token expired or session timeout. Please reload your page';
+	
 </script>
 
 
@@ -167,90 +165,6 @@ function isReadNotification(){
     
   </script><script type="text/javascript" src="https://hcash.one/asset/js/gt4.js"></script>
 <script type="text/javascript">
-  $(function() {
-    var captchaBox = $('#captcha-box');
-    initGeetest4({
-      product: "bind",
-      captchaId: "dfbc9f592760bbb39ed7646d56daf5b0"
-    }, function (captchaObj) {
-      captchaObj.appendTo(captchaBox);
-      captchaObj
-      .onReady(function () {
-      })
-      .onSuccess(function () {
-        var result = captchaObj.getValidate();
-        if (result) {
-          isLogin();
-        }
-      })
-      .onError(function () {
-        toastr.error('Failed. Please try again later.');
-      });
-      $('#isCallData').click(function() {
-        var username = $('#username').val();
-        var password = $('#password').val();
-        if (username.trim() == '') {
-          toastr.error("Username is required.");
-          $('#username').focus();
-          return false;
-        }else if (password.trim() == '') {
-          toastr.error("Password is required.");
-          $('#password').focus();
-          return false;
-        }else {
-          captchaObj.showBox();
-        }
-      })
-    });
-  });
-
-  function isLogin() {
-    var username = $('#username').val();
-    var password = $('#password').val();
-    if (username.trim() == '') {
-      toastr.error("Username is required.");
-      $('#username').focus();
-      return false;
-    }else if (password.trim() == '') {
-      toastr.error("Password is required.");
-      $('#password').focus();
-      return false;
-    } else {
-      showLoader('loading');
-      $("#isCallData").prop('disabled', true);
-      setTimeout(function (response){
-        var requestData = {
-          "username": username,
-          "password": password,
-        };
-        $.ajax({
-          url:"https://hcash.one/verify-login",
-          type: "POST",
-          async: true,
-          data: requestData,
-          headers: {'X-CSRF-TOKEN': csrf_token},
-          dataType: 'json',
-          success: function (response) {
-            if (response.status==1) {
-              toastr.success(response.msg);
-              location.reload();
-            }else if (response.status==2) {
-              toastr.success(response.msg);
-              window.location="https://hcash.one/security-verification";
-            } else {
-              toastr.error(response.msg);
-              $("#isCallData").prop('disabled', false);
-              hideLoader('loading');
-            }
-          }, error: function () {
-            toastr.error(common_errormsg);
-            $("#isCallData").prop('disabled', false);
-            hideLoader('loading');
-          }
-        })
-      },100);
-    }
-  }
 </script>
 </body>
 </html>
